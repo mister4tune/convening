@@ -19,7 +19,7 @@ export class DB {
 
   public static async initDB(config: ISequelizeConfig) {
     DB.sequelize = new Sequelize(
-      'postgresql://callsys:bupt2017@123.56.226.155:54132/postgres',
+      'postgresql://callsys:bupt2017@172.24.228.157:5432/callsysdb',
       {
         dialect: 'postgres',
         host: config.host,

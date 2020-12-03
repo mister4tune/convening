@@ -14,6 +14,7 @@ import 'egg-jsonp';
 import 'egg-view';
 import 'midway-schedule';
 import 'egg-sequelize';
+import 'egg-redis';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -31,5 +32,6 @@ declare module 'egg' {
     view?: EggPluginItem;
     schedulePlus?: EggPluginItem;
     sequelize?: EggPluginItem;
+    redis?: EggPluginItem;
   }
 }

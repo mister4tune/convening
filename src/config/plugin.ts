@@ -5,4 +5,9 @@ export default {
     enable: true,
     package: 'egg-sequelize',
   },
+  session: true,
+  redis: {
+    enable: true,
+    package: 'egg-redis',
+  },
 } as EggPlugin;

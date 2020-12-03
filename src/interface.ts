@@ -9,8 +9,20 @@ export interface IUserOptions {
   phone: string;
 }
 
+export interface ILoginPayload {
+  phone: string;
+  pwd: string;
+}
 export interface IUserService {
   register(options: IUserOptions): Promise<UserModel>;
+  validUser(user: IUser): boolean;
+  login(payload: ILoginPayload): Promise<UserModel>;
+}
+
+export interface IResult {
+  code: number;
+  data: any;
+  msg: string;
 }
 
 export type IUser = UserModel;

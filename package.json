@@ -7,8 +7,10 @@
     "@midwayjs/decorator": "^2.3.0",
     "@midwayjs/web": "^2.3.0",
     "egg": "^2.0.0",
+    "egg-redis": "^2.4.0",
     "egg-scripts": "^2.10.0",
     "egg-sequelize": "^6.0.0",
+    "egg-session": "^3.2.0",
     "pg": "^8.5.1",
     "sequelize": "^5.22.0",
     "sequelize-typescript": "^1.1.0"

@@ -1,7 +1,7 @@
 import { Provide, Inject } from '@midwayjs/decorator';
 import { createHash } from 'crypto';
-import { IUserOptions, IUserService } from '../interface';
-import { IUserModel } from '../model/user';
+import { ILoginPayload, IUser, IUserOptions, IUserService } from '../interface';
+import { IUserModel, UserModel } from '../model/user';
 
 @Provide()
 export class UserService implements IUserService {
@@ -17,5 +17,34 @@ export class UserService implements IUserService {
       licenseId: options.licenseId,
       phone: options.phone,
     });
+  }
+
+  async login(payload: ILoginPayload): Promise<UserModel> {
+    const hashedPwd = createHash('md5').update(payload.pwd).digest('base64');
+    return await this.UserModel.findOne({
+      where: {
+        phone: payload.phone,
+        pwd: hashedPwd,
+      },
+    });
+  }
+
+  validUser(user: IUser): boolean {
+    let result = true;
+    result =
+      result &&
+      !!(
+        user.nickname &&
+        user.pwd &&
+        user.userName &&
+        user.licenseType &&
+        user.licenseId &&
+        user.phone
+      );
+
+    result = result && /^1[3|4|5|7|8]\d{9}$/.test(user.phone);
+    result =
+      result && (user.licenseType === 'ID' || user.licenseType === 'passport');
+    return result;
   }
 }
