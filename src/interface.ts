@@ -10,20 +10,6 @@ export interface IUserOptions {
   phone: string;
 }
 
-/*
-export interface IUserResult {
-  uid: number;
-  nickname: string;
-  userName: string;
-  userType: string;
-  userLevel: string;
-  licenseType: string;
-  licenseId: string;
-  phone: string;
-  city: string;
-  introduction: string;
-}*/
-
 export interface IUserAmendPayload {
   phone?: string;
   pwd?: string;
@@ -53,8 +39,28 @@ export interface IConveningOptions {
   status?: string;
 }
 
+export interface IConveningCreation {
+  owner: number;
+  type: string;
+  name: string;
+  introduction: string;
+  crowdNumber: number;
+  endtime: Date;
+}
+export interface IConveningAmendPayload {
+  type: string;
+  name: string;
+  introduction: string;
+  crowdNumber: number;
+  endtime: Date;
+}
+
 export interface IConveningService {
   normalSelect(options: IConveningOptions): Promise<ConveningModel[]>;
+  createConvening(options: IConveningOptions): Promise<ConveningModel>;
+  validConvening(convening: IConvening): boolean;
+  amend(conveningAmend: IConveningAmendPayload, target: number);
+  delete(target: number);
 }
 export interface IResult {
   code: number;
