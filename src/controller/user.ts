@@ -9,7 +9,12 @@ import {
   Get,
 } from '@midwayjs/decorator';
 import { Context } from 'egg';
-import { IUserService, IUser, ILoginPayload } from '../interface';
+import {
+  IUserService,
+  IUser,
+  ILoginPayload,
+  IUserAmendPayload,
+} from '../interface';
 import { MyContext } from '../types/context';
 import { ErrorResult, Result } from '../types/result';
 
@@ -39,12 +44,17 @@ export class UserController {
   }
   @Post('/login')
   async login(ctx: MyContext, @Body(ALL) payload: ILoginPayload) {
-    if (payload.phone && payload.pwd) {
+    if (payload.nickname && payload.pwd) {
       try {
         const user = await this.userService.login(payload);
         if (user) {
           ctx.session.user = user;
-          ctx.body = new Result(200, user, '登录成功');
+          const result = user;
+          ctx.body = new Result(
+            200,
+            this.userService.desensitation(result),
+            '登录成功'
+          );
         } else {
           ctx.response.status = 403;
           ctx.body = new Result(403, {}, '登录凭据无效');
@@ -58,8 +68,26 @@ export class UserController {
       ctx.body = new Result(406, {}, '请求体无效');
     }
   }
+  @Post('/amend', { middleware: ['authMiddleware'] })
+  async amend(ctx: MyContext, @Body(ALL) userAmend: IUserAmendPayload) {
+    if (userAmend) {
+      try {
+        const user = await this.userService.amend(userAmend, ctx.session.user);
+        ctx.session.user = user;
+        ctx.response.status = 205;
+        ctx.body = new Result(205, {}, '修改成功');
+      } catch (error) {
+        ctx.response.status = 500;
+        ctx.body = new ErrorResult(error);
+      }
+    } else {
+      ctx.response.status = 406;
+      ctx.body = new Result(406, {}, '请求体无效');
+    }
+  }
   @Get('/', { middleware: ['authMiddleware'] })
   async getUserInfo(ctx: MyContext) {
-    return ctx.session.user;
+    const result = ctx.session.user;
+    return this.userService.desensitation(result);
   }
 }

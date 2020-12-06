@@ -1,5 +1,6 @@
 import { Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
 import { Sequelize } from 'sequelize-typescript';
+import { ConveningModel } from './convening';
 import { UserModel } from './user';
 interface ISequelizeConfig {
   host: string;
@@ -19,7 +20,7 @@ export class DB {
 
   public static async initDB(config: ISequelizeConfig) {
     DB.sequelize = new Sequelize(
-      'postgresql://callsys:bupt2017@172.24.228.157:5432/callsysdb',
+      'postgresql://callsys:bupt2017@localhost:5432/callsysdb',
       {
         dialect: 'postgres',
         host: config.host,
@@ -30,7 +31,7 @@ export class DB {
     );
 
     // add models here before using them
-    DB.sequelize.addModels([UserModel]);
+    DB.sequelize.addModels([UserModel, ConveningModel]);
 
     try {
       await DB.sequelize.authenticate();

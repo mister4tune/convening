@@ -1,6 +1,12 @@
 import { Provide, Inject } from '@midwayjs/decorator';
 import { createHash } from 'crypto';
-import { ILoginPayload, IUser, IUserOptions, IUserService } from '../interface';
+import {
+  ILoginPayload,
+  IUser,
+  IUserAmendPayload,
+  IUserOptions,
+  IUserService,
+} from '../interface';
 import { IUserModel, UserModel } from '../model/user';
 
 @Provide()
@@ -23,10 +29,22 @@ export class UserService implements IUserService {
     const hashedPwd = createHash('md5').update(payload.pwd).digest('base64');
     return await this.UserModel.findOne({
       where: {
-        phone: payload.phone,
+        nickname: payload.nickname,
         pwd: hashedPwd,
       },
     });
+  }
+
+  async amend(userAmend: IUserAmendPayload, target: UserModel) {
+    const user = await this.UserModel.findByPk(target.uid);
+    if (userAmend.pwd)
+      user.pwd = createHash('md5').update(userAmend.pwd).digest('base64');
+    user.phone = userAmend.phone ?? user.phone;
+    user.introduction = userAmend.introduvtion ?? user.introduction;
+    user.city = userAmend.city ?? user.city;
+    await user.save();
+    if (userAmend.pwd) return null;
+    else return user;
   }
 
   validUser(user: IUser): boolean {
@@ -46,5 +64,15 @@ export class UserService implements IUserService {
     result =
       result && (user.licenseType === 'ID' || user.licenseType === 'passport');
     return result;
+  }
+
+  desensitation(user: IUser) {
+    const result = user;
+    result.pwd = undefined;
+    return result;
+  }
+
+  findById(id: number): Promise<UserModel> {
+    return this.UserModel.findByPk(id);
   }
 }

@@ -48,6 +48,13 @@ export class UserModel extends Model<UserModel> {
   })
   userType: string;
   @Column({
+    field: 'user_level',
+    type: DataType.ENUM,
+    values: ['diamond', 'platinum', 'gold'],
+    defaultValue: 'gold',
+  })
+  userLevel: string;
+  @Column({
     field: 'user_name',
     type: DataType.STRING(16),
   })
