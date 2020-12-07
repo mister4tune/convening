@@ -1,4 +1,5 @@
 import { ConveningModel } from './model/convening';
+import { RequestModel } from './model/request';
 import { UserModel } from './model/user';
 
 export interface IUserOptions {
@@ -68,6 +69,19 @@ export interface IResult {
   msg: string;
 }
 
+export interface IRequestService {
+  createRequest(payload: IRequestPayload): Promise<RequestModel>;
+  amendRequest(updatePost: string, rid: number);
+  delete(target: number);
+}
+
+export interface IRequestPayload {
+  cid: number;
+  comments?: string;
+}
+
 export type IUser = UserModel;
 
 export type IConvening = ConveningModel;
+
+export type IRequest = RequestModel;
