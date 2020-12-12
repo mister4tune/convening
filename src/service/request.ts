@@ -1,5 +1,9 @@
 import { Provide, Inject } from '@midwayjs/decorator';
-import { IRequestPayload, IRequestService } from '../interface';
+import {
+  IRequestPayload,
+  IRequestService,
+  IResponsePayload,
+} from '../interface';
 import { ConveningModel } from '../model/convening';
 import { IRequestModel, RequestModel } from '../model/request';
 
@@ -26,5 +30,29 @@ export class RequestService implements IRequestService {
         rid: target,
       },
     });
+  }
+  async response(payload: IResponsePayload): Promise<boolean> {
+    const convening = await ConveningModel.findByPk(payload.cid);
+    const request = await this.RequestModel.findByPk(payload.rid);
+    const responsedRequests = await this.RequestModel.findAll({
+      where: {
+        cid: payload.cid,
+        status: 'accepted',
+      },
+    });
+    if (request.cid !== convening.cid) return false;
+    else {
+      if (JSON.parse(payload.accept as string) === false) {
+        request.status = 'rejected';
+        await request.save();
+        return true;
+      } else {
+        if (convening.crowdNumber > responsedRequests.length) {
+          request.status = 'accepted';
+          await request.save();
+          return true;
+        } else return false;
+      }
+    }
   }
 }

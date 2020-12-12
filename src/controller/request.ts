@@ -13,6 +13,7 @@ import {
   IConveningService,
   IRequest,
   IRequestService,
+  IResponsePayload,
   IUserService,
 } from '../interface';
 import { MyContext } from '../types/context';
@@ -46,7 +47,7 @@ export class RequestController {
       ctx.body = new Result(406, {}, '请求体无效');
     }
   }
-  @Post('/:rid', { middleware: ['authMiddleware'] })
+  @Post('/amend/:rid', { middleware: ['authMiddleware'] })
   async amendRequest(
     ctx: MyContext,
     @Body('comments') comments: string,
@@ -59,6 +60,27 @@ export class RequestController {
     } catch (error) {
       ctx.response.status = 500;
       ctx.body = new ErrorResult(error);
+    }
+  }
+  @Post('/response', { middleware: ['authMiddleware'] })
+  async responseRequest(ctx: MyContext, @Body(ALL) payload: IResponsePayload) {
+    if (payload.cid && payload.rid) {
+      try {
+        const toResponse = this.requestService.response(payload);
+        if ((await toResponse).valueOf) {
+          ctx.response.status = 200;
+          ctx.body = new Result(200, {}, '修改成功');
+        } else {
+          ctx.response.status = 400;
+          ctx.body = new Result(400, {}, '请求体无效');
+        }
+      } catch (error) {
+        ctx.response.status = 500;
+        ctx.body = new ErrorResult(error);
+      }
+    } else {
+      ctx.response.status = 406;
+      ctx.body = new Result(406, {}, '请求体无效');
     }
   }
   @Del('/:target', { middleware: ['authMiddleware'] })

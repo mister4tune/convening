@@ -73,11 +73,18 @@ export interface IRequestService {
   createRequest(payload: IRequestPayload): Promise<RequestModel>;
   amendRequest(updatePost: string, rid: number);
   delete(target: number);
+  response(payload: IResponsePayload): Promise<boolean>;
 }
 
 export interface IRequestPayload {
   cid: number;
   comments?: string;
+}
+
+export interface IResponsePayload {
+  cid: number;
+  rid: number;
+  accept: boolean | string;
 }
 
 export type IUser = UserModel;
