@@ -74,8 +74,8 @@ export class UserController {
       try {
         const user = await this.userService.amend(userAmend, ctx.session.user);
         ctx.session.user = user;
-        ctx.response.status = 205;
-        ctx.body = new Result(205, {}, '修改成功');
+        ctx.response.status = 200;
+        ctx.body = new Result(200, {}, '修改成功');
       } catch (error) {
         ctx.response.status = 500;
         ctx.body = new ErrorResult(error);
