@@ -1,15 +1,10 @@
-import { EggAppConfig, PowerPartial } from 'egg';
+import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
 export type ProdConfig = PowerPartial<EggAppConfig>;
 
-export default () => {
+export default (appInfo: EggAppInfo) => {
   const config = {} as ProdConfig;
-
-  config.security = {
-    csrf: {
-      enable: false,
-    },
-  };
+  config.keys = appInfo.name + '_{{apikeys}}';
 
   config.sequelize = {
     dialect: 'postgres', // support: mysql, mariadb, postgres, mssql
