@@ -19,18 +19,18 @@ export default (appInfo: EggAppInfo) => {
 
   config.sequelize = {
     dialect: 'postgres', // support: mysql, mariadb, postgres, mssql
-    database: 'callsysdb', //数据库名
-    host: 'localhost',
-    port: 5432,
-    username: 'callsys', //账号
-    password: 'bupt2017', //密码
+    database: process.env.DBNAME || 'callsysdb', //数据库名
+    host: process.env.DBHOST || 'localhost',
+    port: Number(process.env.DBPORT) || 5432,
+    username: process.env.DBUSERNAME || 'callsys', //账号
+    password: process.env.DBPWD || 'bupt2017', //密码
   };
 
   config.redis = {
     client: {
-      port: 6379,
-      host: 'localhost',
-      password: '', //密码
+      port: Number(process.env.REDISPORT) || 6379,
+      host: process.env.REDISHOST || 'localhost',
+      password: process.env.REDISPWD || '', //密码
       db: 0,
     },
   };
