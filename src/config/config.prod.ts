@@ -4,7 +4,7 @@ export type ProdConfig = PowerPartial<EggAppConfig>;
 
 export default (appInfo: EggAppInfo) => {
   const config = {} as ProdConfig;
-  config.keys = appInfo.name + '_{{apikeys}}';
+  config.keys = 'conveningServer' + '_{{apikeys}}';
 
   config.sequelize = {
     dialect: 'postgres', // support: mysql, mariadb, postgres, mssql
