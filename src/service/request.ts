@@ -1,5 +1,6 @@
 import { Provide, Inject } from '@midwayjs/decorator';
 import {
+  IRequestOptions,
   IRequestPayload,
   IRequestService,
   IResponsePayload,
@@ -23,6 +24,11 @@ export class RequestService implements IRequestService {
     request.comments = updatePost ?? request.comments;
     await request.save();
     return request;
+  }
+  async findRequest(options: IRequestOptions): Promise<RequestModel[]> {
+    return await this.RequestModel.findAll({
+      where: { ...options },
+    });
   }
   async delete(target: number) {
     await this.RequestModel.destroy({

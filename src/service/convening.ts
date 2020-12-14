@@ -31,6 +31,7 @@ export class ConveningService implements IConveningService {
     convening.name = conveningAmend.name ?? convening.name;
     convening.endtime = conveningAmend.endtime ?? convening.endtime;
     convening.crowdNumber = conveningAmend.crowdNumber ?? convening.crowdNumber;
+    convening.status = conveningAmend.status ?? convening.status;
     await convening.save();
     return convening;
   }

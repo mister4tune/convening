@@ -8,10 +8,13 @@ import {
   Post,
   Param,
   Del,
+  Query,
+  Get,
 } from '@midwayjs/decorator';
 import {
   IConveningService,
   IRequest,
+  IRequestOptions,
   IRequestService,
   IResponsePayload,
   IUserService,
@@ -33,7 +36,7 @@ export class RequestController {
   async createRequest(ctx: MyContext, @Body(ALL) request: IRequest) {
     if (request.cid) {
       try {
-        const newRequest = this.requestService.createRequest(request);
+        const newRequest = await this.requestService.createRequest(request);
         if (newRequest) {
           ctx.response.status = 201;
           ctx.body = new Result(201, newRequest, '创建成功');
@@ -81,6 +84,28 @@ export class RequestController {
     } else {
       ctx.response.status = 406;
       ctx.body = new Result(406, {}, '请求体无效');
+    }
+  }
+  @Get('/', { middleware: ['authMiddleware'] })
+  async findRequest(ctx: MyContext, @Query(ALL) options: IRequestOptions) {
+    try {
+      const result = await this.requestService.findRequest(options);
+      ctx.body = new Result(
+        200,
+        await Promise.all(
+          result.map(async request => {
+            (request.uid as any) = this.userService.desensitation(
+              await this.userService.findById(request.uid)
+            );
+            request.uid = this.userService.desensitation(request.uid as any);
+            return request;
+          })
+        ),
+        ''
+      );
+    } catch (error) {
+      ctx.response.status = 500;
+      ctx.body = new ErrorResult(error);
     }
   }
   @Del('/:target', { middleware: ['authMiddleware'] })

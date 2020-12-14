@@ -49,11 +49,12 @@ export interface IConveningCreation {
   endtime: Date;
 }
 export interface IConveningAmendPayload {
-  type: string;
-  name: string;
-  introduction: string;
-  crowdNumber: number;
-  endtime: Date;
+  type?: string;
+  name?: string;
+  introduction?: string;
+  crowdNumber?: number;
+  endtime?: Date;
+  status?: string;
 }
 
 export interface IConveningService {
@@ -74,6 +75,7 @@ export interface IRequestService {
   amendRequest(updatePost: string, rid: number);
   delete(target: number);
   response(payload: IResponsePayload): Promise<boolean>;
+  findRequest(options: IRequestOptions): Promise<RequestModel[]>;
 }
 
 export interface IRequestPayload {
@@ -85,6 +87,13 @@ export interface IResponsePayload {
   cid: number;
   rid: number;
   accept: boolean | string;
+}
+
+export interface IRequestOptions {
+  cid?: number;
+  rid?: number;
+  uid?: number;
+  status?: string;
 }
 
 export type IUser = UserModel;
