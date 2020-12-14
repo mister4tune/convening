@@ -6,7 +6,7 @@ import { UserModel } from './user';
 interface ISequelizeConfig {
   host: string;
   port: number;
-  user: string;
+  username: string;
   password: string;
   database: string;
   dialect: string;
@@ -21,7 +21,7 @@ export class DB {
 
   public static async initDB(config: ISequelizeConfig) {
     DB.sequelize = new Sequelize(
-      'postgresql://callsys:bupt2017@localhost:5432/callsysdb',
+      `postgresql://${config.username}:${config.password}@${config.host}:${config.port}/${config.database}`,
       {
         dialect: 'postgres',
         host: config.host,
