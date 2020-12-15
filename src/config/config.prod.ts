@@ -24,8 +24,9 @@ export default (appInfo: EggAppInfo) => {
     },
   };
   config.cors = {
-    origin: '*',
+    origin: 'http://localhost:8081',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+    credentials: true,
   };
   config.security = {
     csrf: {
