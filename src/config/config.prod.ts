@@ -30,7 +30,9 @@ export default (appInfo: EggAppInfo) => {
   config.security = {
     csrf: {
       enable: false,
+      ignoreJSON: true,
     },
+    domainWhiteList: ['http://localhost:8081'],
   };
   return config;
 };
