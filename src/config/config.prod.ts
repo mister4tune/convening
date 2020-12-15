@@ -27,5 +27,10 @@ export default (appInfo: EggAppInfo) => {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
   return config;
 };
