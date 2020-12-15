@@ -23,5 +23,9 @@ export default (appInfo: EggAppInfo) => {
       db: 0,
     },
   };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  };
   return config;
 };
