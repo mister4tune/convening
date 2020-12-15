@@ -38,7 +38,7 @@ export default (appInfo: EggAppInfo) => {
   config.session = {
     key: 'EGG_SESS',
     maxAge: 24 * 3600 * 1000, // 1 天
-    httpOnly: true,
+    httpOnly: false,
     encrypt: true,
   };
   return config;
