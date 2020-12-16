@@ -9,6 +9,8 @@ export interface IUserOptions {
   licenseType: string;
   licenseId: string;
   phone: string;
+  introduction?: string;
+  city?: string;
 }
 
 export interface IUserAmendPayload {

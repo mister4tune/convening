@@ -15,14 +15,46 @@ export class UserService implements IUserService {
   UserModel: IUserModel;
   async register(options: IUserOptions) {
     const hashedPwd = createHash('md5').update(options.pwd).digest('base64');
-    return await this.UserModel.create({
-      nickname: options.nickname,
-      pwd: hashedPwd,
-      userName: options.userName,
-      licenseType: options.licenseType,
-      licenseId: options.licenseId,
-      phone: options.phone,
-    });
+    if (options.introduction && options.city)
+      return await this.UserModel.create({
+        nickname: options.nickname,
+        pwd: hashedPwd,
+        userName: options.userName,
+        licenseType: options.licenseType,
+        licenseId: options.licenseId,
+        phone: options.phone,
+        city: options.city,
+        introduction: options.introduction,
+      });
+    else if (options.introduction && !options.city)
+      return await this.UserModel.create({
+        nickname: options.nickname,
+        pwd: hashedPwd,
+        userName: options.userName,
+        licenseType: options.licenseType,
+        licenseId: options.licenseId,
+        phone: options.phone,
+        introduction: options.introduction,
+      });
+    else if (!options.introduction && options.city)
+      return await this.UserModel.create({
+        nickname: options.nickname,
+        pwd: hashedPwd,
+        userName: options.userName,
+        licenseType: options.licenseType,
+        licenseId: options.licenseId,
+        phone: options.phone,
+        city: options.city,
+      });
+    else
+      return await this.UserModel.create({
+        nickname: options.nickname,
+        pwd: hashedPwd,
+        userName: options.userName,
+        licenseType: options.licenseType,
+        licenseId: options.licenseId,
+        phone: options.phone,
+      });
   }
 
   async login(payload: ILoginPayload): Promise<UserModel> {
