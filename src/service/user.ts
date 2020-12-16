@@ -40,7 +40,7 @@ export class UserService implements IUserService {
     if (userAmend.pwd)
       user.pwd = createHash('md5').update(userAmend.pwd).digest('base64');
     user.phone = userAmend.phone ?? user.phone;
-    user.introduction = userAmend.introduvtion ?? user.introduction;
+    user.introduction = userAmend.introduction ?? user.introduction;
     user.city = userAmend.city ?? user.city;
     await user.save();
     if (userAmend.pwd) return null;

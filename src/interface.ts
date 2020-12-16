@@ -14,7 +14,7 @@ export interface IUserOptions {
 export interface IUserAmendPayload {
   phone?: string;
   pwd?: string;
-  introduvtion?: string;
+  introduction?: string;
   city?: string;
 }
 export interface ILoginPayload {
