@@ -25,9 +25,9 @@ import { ErrorResult, Result } from '../types/result';
 @Controller('/convening')
 export class ConveningController {
   @Inject()
-  conveningService: IConveningService;
+  private conveningService: IConveningService;
   @Inject()
-  userService: IUserService;
+  private userService: IUserService;
 
   @Get('/normal', { middleware: ['authMiddleware'] })
   async normalSelect(ctx: MyContext, @Query(ALL) options: IConveningOptions) {

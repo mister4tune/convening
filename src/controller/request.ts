@@ -12,7 +12,6 @@ import {
   Get,
 } from '@midwayjs/decorator';
 import {
-  IConveningService,
   IRequest,
   IRequestOptions,
   IRequestService,
@@ -26,11 +25,9 @@ import { ErrorResult, Result } from '../types/result';
 @Controller('/request')
 export class RequestController {
   @Inject()
-  conveningService: IConveningService;
+  private userService: IUserService;
   @Inject()
-  userService: IUserService;
-  @Inject()
-  requestService: IRequestService;
+  private requestService: IRequestService;
 
   @Put('/', { middleware: ['authMiddleware'] })
   async createRequest(ctx: MyContext, @Body(ALL) request: IRequest) {

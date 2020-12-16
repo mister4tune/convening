@@ -1,8 +1,8 @@
-import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+import { EggAppConfig, PowerPartial } from 'egg';
 
 export type ProdConfig = PowerPartial<EggAppConfig>;
 
-export default (appInfo: EggAppInfo) => {
+export default () => {
   const config = {} as ProdConfig;
   config.keys = 'conveningServer' + '_{{apikeys}}';
 

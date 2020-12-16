@@ -11,7 +11,7 @@ import { IRequestModel, RequestModel } from '../model/request';
 @Provide()
 export class RequestService implements IRequestService {
   @Inject()
-  RequestModel: IRequestModel;
+  private RequestModel: IRequestModel;
   async createRequest(payload: IRequestPayload): Promise<RequestModel> {
     const convening = await ConveningModel.findByPk(payload.cid);
     return await this.RequestModel.create({

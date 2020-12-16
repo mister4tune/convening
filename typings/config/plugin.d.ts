@@ -14,6 +14,7 @@ import 'egg-view';
 import 'midway-schedule';
 import 'egg-sequelize';
 import 'egg-redis';
+import 'egg-cors';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -32,5 +33,6 @@ declare module 'egg' {
     schedulePlus?: EggPluginItem;
     sequelize?: EggPluginItem;
     redis?: EggPluginItem;
+    cors?: EggPluginItem;
   }
 }

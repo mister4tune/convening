@@ -12,7 +12,7 @@ import { ConveningModel, IConveningModel } from '../model/convening';
 @Provide()
 export class ConveningService implements IConveningService {
   @Inject()
-  ConveningModel: IConveningModel;
+  private ConveningModel: IConveningModel;
   async normalSelect(options: IConveningOptions): Promise<ConveningModel[]> {
     return await this.ConveningModel.findAll({
       where: { ...options },

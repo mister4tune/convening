@@ -1,4 +1,6 @@
 import { ConveningModel } from './model/convening';
+import { IncomeModel } from './model/income';
+import { InfoModel } from './model/info';
 import { RequestModel } from './model/request';
 import { UserModel } from './model/user';
 
@@ -98,8 +100,56 @@ export interface IRequestOptions {
   status?: string;
 }
 
+export interface IIncomeService {
+  createIncome(payload: IIncomePayload): Promise<IncomeModel>;
+  amendIncome(updatePost: string, rid: number);
+  findIncome(options: IIncomeOptions): Promise<IncomeModel[]>;
+  delete(target: number);
+}
+
+export interface IIncomePayload {
+  quantity: number;
+  income: number;
+  type: string;
+  ctype: string;
+  city: string;
+  date: Date;
+}
+
+export interface IIncomeOptions {
+  quantity: number;
+  income: number;
+  type: string;
+  ctype: string;
+  city: string;
+  date: Date;
+}
+
+export interface IInfoService {
+  createInfo(payload: IInfoPayload): Promise<InfoModel>;
+  amendInfo(updatePost: string, rid: number);
+  findInfo(options: IInfoOptions): Promise<InfoModel[]>;
+  delete(target: number);
+}
+
+export interface IInfoPayload {
+  owner: number;
+  contractor: number;
+  date: Date;
+}
+
+export interface IInfoOptions {
+  owner: number;
+  contractor: number;
+  date: Date;
+}
+
 export type IUser = UserModel;
 
 export type IConvening = ConveningModel;
 
 export type IRequest = RequestModel;
+
+export type IIncome = IncomeModel;
+
+export type IInfo = InfoModel;

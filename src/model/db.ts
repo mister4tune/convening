@@ -1,6 +1,8 @@
 import { Provide, Scope, ScopeEnum } from '@midwayjs/decorator';
 import { Sequelize } from 'sequelize-typescript';
 import { ConveningModel } from './convening';
+import { IncomeModel } from './income';
+import { InfoModel } from './info';
 import { RequestModel } from './request';
 import { UserModel } from './user';
 interface ISequelizeConfig {
@@ -32,7 +34,13 @@ export class DB {
     );
 
     // add models here before using them
-    DB.sequelize.addModels([UserModel, ConveningModel, RequestModel]);
+    DB.sequelize.addModels([
+      UserModel,
+      ConveningModel,
+      RequestModel,
+      InfoModel,
+      IncomeModel,
+    ]);
 
     try {
       await DB.sequelize.authenticate();

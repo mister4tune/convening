@@ -22,7 +22,7 @@ import { ErrorResult, Result } from '../types/result';
 @Controller('/user')
 export class UserController {
   @Inject()
-  userService: IUserService;
+  private userService: IUserService;
 
   @Put('/')
   async register(ctx: Context, @Body(ALL) user: IUser) {

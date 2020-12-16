@@ -12,7 +12,7 @@ import { IUserModel, UserModel } from '../model/user';
 @Provide()
 export class UserService implements IUserService {
   @Inject()
-  UserModel: IUserModel;
+  private UserModel: IUserModel;
   async register(options: IUserOptions) {
     const hashedPwd = createHash('md5').update(options.pwd).digest('base64');
     if (options.introduction && options.city)
